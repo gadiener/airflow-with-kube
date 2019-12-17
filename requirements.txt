@@ -1,0 +1,2 @@
+flask_oauthlib==0.9.5
+apache-airflow[kubernetes,google_auth]==1.10.6
