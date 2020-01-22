@@ -82,11 +82,6 @@ case "$1" in
   worker|scheduler)
     # To give the webserver time to run initdb.
     sleep 10
-
-    if [[ -n "$AIRFLOW__CORE__WORKER_LOG_SERVER_PORT" && "${1}" = "worker" ]]; then
-        python -m http.server --directory "${AIRFLOW__CORE__BASE_LOG_FOLDER}" "${AIRFLOW__CORE__WORKER_LOG_SERVER_PORT}" &
-    fi
-
     exec airflow "$@"
     ;;
   flower)
@@ -95,6 +90,14 @@ case "$1" in
     ;;
   version)
     exec airflow "$@"
+    ;;
+  airflow)
+    if [ -n "${AIRFLOW__CORE__WORKER_LOG_SERVER_PORT}" ] && [ "${2}" = "run" ]; then
+        echo "$(date) - Running http server on port '${AIRFLOW__CORE__WORKER_LOG_SERVER_PORT}' and folder '${AIRFLOW__CORE__BASE_LOG_FOLDER}'"
+        python -m http.server --directory "${AIRFLOW__CORE__BASE_LOG_FOLDER}" "${AIRFLOW__CORE__WORKER_LOG_SERVER_PORT}" &
+    fi
+
+    exec "$@"
     ;;
   *)
     # The command is something like bash, not an airflow subcommand. Just run it in the right environment.
