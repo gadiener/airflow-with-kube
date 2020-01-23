@@ -10,5 +10,3 @@ LABEL maintainer="Gabriele Diener <g.diener@me.com>" \
 COPY ./requirements.txt ./requirements.txt
 
 RUN pip install --user -r requirements.txt
-
-COPY --chown=airflow:airflow bin/entrypoint.sh /entrypoint.sh
