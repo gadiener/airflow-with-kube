@@ -1,0 +1,16 @@
+FROM gdiener/kube-airflow:v1.5.0
+
+LABEL maintainer="Gabriele Diener <g.diener@me.com>" \
+    image="gdiener/kube-airflow" \
+    repository="https://github.com/gadiener/kube-airflow" \
+    vendor="gdiener" \
+    description="Docker image with Airflow and light http server to serve worker log. Useful with Kubernetes Executor." \
+    license="MIT"
+
+USER root
+
+RUN mv /usr/local/bin/airflow /usr/local/bin/airflow-real
+
+COPY ./bin/fake-airflow.sh /usr/local/bin/airflow
+
+USER airflow
