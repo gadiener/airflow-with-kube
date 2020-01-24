@@ -1,4 +1,4 @@
-FROM puckel/docker-airflow:1.10.6-1
+FROM puckel/docker-airflow:1.10.7
 
 LABEL maintainer="Gabriele Diener <g.diener@me.com>" \
     image="gdiener/kube-airflow" \
